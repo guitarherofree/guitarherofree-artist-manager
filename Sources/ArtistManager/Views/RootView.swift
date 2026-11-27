@@ -12,6 +12,7 @@ struct RootView: View {
                     row(.today)
                     row(.plan)
                     row(.profile)
+                    row(.legacy)
                 }
                 Section("Work") {
                     row(.releases)
@@ -60,6 +61,7 @@ struct RootView: View {
         case .today: TodayView()
         case .plan: PlanView()
         case .profile: ProfileView()
+        case .legacy: LegacyView()
         case .releases: ReleasesView()
         case .press: PressView()
         case .coverage: CoverageView()

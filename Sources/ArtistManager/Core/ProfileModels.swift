@@ -235,7 +235,7 @@ enum Priority: String, Codable, CaseIterable, Identifiable, Comparable {
 
 /// Where in the app a recommendation's next step lives.
 enum AppDestination: String, Codable, CaseIterable {
-    case today, plan, profile, releases, press, coverage, targets, email, calendar, tasks, team, contacts, approvals, integrations, roadmap
+    case today, plan, profile, legacy, releases, press, coverage, targets, email, calendar, tasks, team, contacts, approvals, integrations, roadmap
 }
 
 struct Recommendation: Entity {

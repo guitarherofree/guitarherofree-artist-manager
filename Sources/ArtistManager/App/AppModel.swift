@@ -3,7 +3,7 @@ import Foundation
 import SwiftUI
 
 enum SidebarItem: String, Hashable, CaseIterable, Identifiable {
-    case today, plan, profile, releases, press, coverage, targets, email, calendar, tasks, team, contacts, approvals, integrations, roadmap
+    case today, plan, profile, legacy, releases, press, coverage, targets, email, calendar, tasks, team, contacts, approvals, integrations, roadmap
     var id: String { rawValue }
 
     var title: String {
@@ -11,6 +11,7 @@ enum SidebarItem: String, Hashable, CaseIterable, Identifiable {
         case .today: return "Today"
         case .plan: return "Career Plan"
         case .profile: return "Profile & Brand"
+        case .legacy: return "Legacy"
         case .releases: return "Releases"
         case .press: return "Press Kit"
         case .coverage: return "Coverage"
@@ -31,6 +32,7 @@ enum SidebarItem: String, Hashable, CaseIterable, Identifiable {
         case .today: return "sun.max"
         case .plan: return "map"
         case .profile: return "person.crop.circle"
+        case .legacy: return "archivebox"
         case .releases: return "opticaldisc"
         case .press: return "newspaper"
         case .coverage: return "quote.bubble"

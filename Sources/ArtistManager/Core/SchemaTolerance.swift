@@ -109,6 +109,11 @@ enum TolerantDecoding {
             coverage.attachments = [CoverageAttachment()]
             ws.coverage = [coverage]
             ws.targets = [Target()]
+            if withOptionals {
+                // Sample records only in the shape template, so a file without a legacy plan starts with none.
+                ws.legacy.accounts = [LegacyAccount()]
+                ws.legacy.archive = [ArchiveLocation()]
+            }
             var subscriber = Subscriber()
             var segment = Segment()
             var campaign = EmailCampaign()

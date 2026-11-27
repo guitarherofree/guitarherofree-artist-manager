@@ -2,6 +2,12 @@
 
 To publish a release, add a `## x.y.z` section at the top with notes and push to main.
 
+## 0.3.0
+- **Legacy**: a new page for planning what happens to your music if you can't look after it. Choose who would handle your catalog and a backup, note your will, trust and agreements and where each one is, list the accounts someone would need and where each sign-in is kept (never the password), write down where your masters, stems and session files are, and set out your wishes for the catalog, unreleased music, licensing and your name, image and voice.
+- A readiness checklist shows what's left, and Manager reminds you to review the plan once a year (or as often as you choose).
+- Print or export a letter for your executor or attorney with all of it, plus your releases with their codes and songwriter splits and where your royalties are collected.
+- Legacy organizes things; it isn't legal advice. An estate attorney can turn it into a will or trust that counts.
+
 ## 0.2.1
 - **Team** and **Contacts** are now separate pages in the sidebar. Team holds the people you work with, with what each one handles and a filter for check-ins that are due. Contacts holds everyone else, with the import options.
 - Turning “Part of my team” on or off moves a person to the other page, and Manager takes you there.

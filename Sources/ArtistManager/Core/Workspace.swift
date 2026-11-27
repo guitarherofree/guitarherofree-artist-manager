@@ -2,14 +2,14 @@ import Foundation
 
 /// The kinds of records the workspace holds. Used for diffs, undo, and linking approvals to records.
 enum EntityKind: String, Codable, CaseIterable {
-    case profile, pressKit, permissions, settings
+    case profile, pressKit, permissions, settings, legacy
     case goals, recommendations, releases, tasks, events, contacts
     case outreach, pressReleases, coverage, targets, subscribers, segments, campaigns
     case budgetLines, approvals
 
     var isSingleton: Bool {
         switch self {
-        case .profile, .pressKit, .permissions, .settings: return true
+        case .profile, .pressKit, .permissions, .settings, .legacy: return true
         default: return false
         }
     }
@@ -21,6 +21,7 @@ enum EntityKind: String, Codable, CaseIterable {
         case .pressKit: return UUID(uuidString: "00000000-0000-0000-0000-000000000002")!
         case .permissions: return UUID(uuidString: "00000000-0000-0000-0000-000000000003")!
         case .settings: return UUID(uuidString: "00000000-0000-0000-0000-000000000004")!
+        case .legacy: return UUID(uuidString: "00000000-0000-0000-0000-000000000005")!
         default: return UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
         }
     }
@@ -31,6 +32,7 @@ enum EntityKind: String, Codable, CaseIterable {
         case .pressKit: return "Press kit"
         case .permissions: return "Permissions"
         case .settings: return "Settings"
+        case .legacy: return "Legacy plan"
         case .goals: return "Goal"
         case .recommendations: return "Recommendation"
         case .releases: return "Release"
@@ -71,6 +73,7 @@ struct Workspace: Codable, Equatable {
     var pressKit = PressKit()
     var permissions = PermissionPolicy()
     var settings = AppSettings()
+    var legacy = LegacyPlan()
 
     var goals: [CareerGoal] = []
     var recommendations: [Recommendation] = []
@@ -101,6 +104,7 @@ struct Workspace: Codable, Equatable {
         pressKit = try c.decodeIfPresent(PressKit.self, forKey: .pressKit) ?? PressKit()
         permissions = try c.decodeIfPresent(PermissionPolicy.self, forKey: .permissions) ?? PermissionPolicy()
         settings = try c.decodeIfPresent(AppSettings.self, forKey: .settings) ?? AppSettings()
+        legacy = try c.decodeIfPresent(LegacyPlan.self, forKey: .legacy) ?? LegacyPlan()
         goals = try c.decodeIfPresent([CareerGoal].self, forKey: .goals) ?? []
         recommendations = try c.decodeIfPresent([Recommendation].self, forKey: .recommendations) ?? []
         releases = try c.decodeIfPresent([Release].self, forKey: .releases) ?? []
@@ -205,6 +209,7 @@ extension Workspace {
         single(.pressKit, \.pressKit)
         single(.permissions, \.permissions)
         single(.settings, \.settings)
+        single(.legacy, \.legacy)
         collection(.goals, \.goals)
         collection(.recommendations, \.recommendations)
         collection(.releases, \.releases)
@@ -234,6 +239,7 @@ extension Workspace {
         case .pressKit: return JSONCoding.encode(pressKit)
         case .permissions: return JSONCoding.encode(permissions)
         case .settings: return JSONCoding.encode(settings)
+        case .legacy: return JSONCoding.encode(legacy)
         case .goals: return find(goals)
         case .recommendations: return find(recommendations)
         case .releases: return find(releases)
@@ -269,6 +275,7 @@ extension Workspace {
         case .pressKit: if let data { pressKit = try JSONCoding.decode(PressKit.self, from: data) }
         case .permissions: if let data { permissions = try JSONCoding.decode(PermissionPolicy.self, from: data) }
         case .settings: if let data { settings = try JSONCoding.decode(AppSettings.self, from: data) }
+        case .legacy: if let data { legacy = try JSONCoding.decode(LegacyPlan.self, from: data) }
         case .goals: try put(\.goals)
         case .recommendations: try put(\.recommendations)
         case .releases: try put(\.releases)

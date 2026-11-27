@@ -214,6 +214,20 @@ enum PlanGenerator {
                 destination: dueFollowUps.allSatisfy(\.isTeamMember) ? .team : .contacts, due: today)
         }
 
+        // Legacy: who looks after the music, and where everything is
+        if !LegacyReadiness.releasedReleases(ws, now: now).isEmpty {
+            if !LegacyReadiness.hasStarted(ws.legacy) {
+                add("legacy-start", "Start a legacy plan for your music",
+                    "Choose who would look after your catalog, and write down where your masters, documents and accounts are. It takes about half an hour.",
+                    why: "Your released music keeps earning. Without a plan, the people you leave behind may not know what exists or how to reach it.",
+                    area: .rights, priority: .low, destination: .legacy)
+            } else if LegacyReadiness.isReviewDue(ws.legacy, now: now) && ws.legacy.lastReviewed != nil {
+                add("legacy-review", "Review your legacy plan",
+                    "Check the people, accounts and file locations are still right, and add anything new since last time.",
+                    why: "You asked to review it every \(ws.legacy.reviewEveryMonths) months.", area: .rights, priority: .low, destination: .legacy)
+            }
+        }
+
         // Coverage
         for release in ws.releases {
             guard let date = release.releaseDate else { continue }

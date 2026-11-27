@@ -41,6 +41,15 @@ Where the brief left room, these are the choices made and why. Each is easy to r
 - **Submission details found on a website** (a submissions or demo page, an address) are suggestions from the public page and are marked as such. Respect a label's or outlet's stated policy: when they say they aren't taking submissions, or work by referral only, Manager says so instead of nudging a pitch.
 - **Label pitches** are a new pitch type: who you are, a line about why the label (left in brackets for you to write), comparable artists, a listening link, two or three highlights from your press kit, and what you're looking for. Like every pitch, it needs approval and goes out from your mail app.
 
+## Legacy
+
+- **An organizer, not legal advice.** The Legacy page records who would look after the music, where things are and what the artist wants. It says plainly that a will or trust is what makes any of it binding, and points to an estate attorney.
+- **No passwords.** Accounts record what each one controls and where its sign-in is kept. Text that looks like a password, PIN or recovery code gets a red warning. The page recommends a password manager's emergency access and services' own legacy settings (Apple Legacy Contact, Google Inactive Account Manager) instead.
+- **Facts shown are general and US-focused:** copyright generally lasting for life plus 70 years; royalties passing as the will or trust says, or with the rest of the estate; US termination rights (35 years after a grant) passing to a spouse, children or grandchildren by statute regardless of the will; DistroKid's per-release Leave a Legacy extra; and post-death rights in name, image and voice varying by place. No fees or deadlines are quoted.
+- **It reuses what Manager already knows**: released music with ISRCs, ISWCs and writer splits, royalty memberships from Profile › Rights, distributors from Releases, links from the profile, and team members. The letter is built fresh each time from the current data.
+- **The letter** (HTML to print or save as PDF, or plain text) includes contact details for the people named and the team. It's written to a file only when the artist exports it.
+- **Readiness** is a checklist of 15 items; nothing is scored until something is entered. The plan suggests starting a legacy plan (low priority) once there's released music, and a review at the interval the artist picks (12 months by default).
+
 ## Renaming
 
 - The app was renamed from “Artist Manager” to “Manager”. The data folder moves to `~/Library/Application Support/Manager` on first launch; nothing in an existing new folder is ever overwritten.
