@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleDisplayName</key>
+    <string>__APP_NAME__</string>
+    <key>CFBundleName</key>
+    <string>__APP_NAME__</string>
+    <key>CFBundleExecutable</key>
+    <string>__EXECUTABLE__</string>
+    <key>CFBundleIdentifier</key>
+    <string>__BUNDLE_ID__</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>__VERSION__</string>
+    <key>CFBundleVersion</key>
+    <string>__BUILD__</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.music</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Manager imports the people you choose into your contacts here. It never changes anything in the Contacts app.</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>Built for Freeman Edwards.</string>
+    <!-- The in-app updater reads releases from this repository. -->
+    <key>GitHubRepository</key>
+    <string>__GITHUB_REPOSITORY__</string>
+</dict>
+</plist>

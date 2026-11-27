@@ -1,0 +1,122 @@
+# Standard release workflow for Freeman's Mac apps.
+#
+# To release: add a "## x.y.z" section with notes at the top of CHANGELOG.md and push to main.
+# It also runs for a pushed v* tag, or by hand from the Actions tab (Run workflow).
+#
+# Builds the app on an Apple silicon runner, signs it ad hoc, and publishes
+# <APP_NAME>-<version>-mac-arm64.zip as a GitHub release with that CHANGELOG section as notes.
+# The app's built-in updater (Packages/GitHubReleaseUpdater) finds it through the
+# releases API and checks it against the SHA-256 digest GitHub publishes for each asset.
+#
+# Manager is a Swift package rather than an Xcode project, so the build step runs
+# Scripts/build.sh (swift build + app bundle) instead of xcodebuild. Everything else is the standard.
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths: ["CHANGELOG.md"]
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, e.g. 0.3.0 (needs a CHANGELOG.md section)"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+env:
+  APP_NAME: Manager
+
+jobs:
+  decide:
+    runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.decide.outputs.release }}
+      version: ${{ steps.decide.outputs.version }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decide whether to release
+        id: decide
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+          elif [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            VERSION="${GITHUB_REF_NAME}"
+          else
+            VERSION="$(grep -m1 -E '^## v?[0-9]+\.[0-9]+\.[0-9]+' CHANGELOG.md | awk '{print $2}')"
+          fi
+          VERSION="${VERSION#v}"
+          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::Couldn't find a version like 1.2.3 (got '$VERSION')"; exit 1
+          fi
+          if gh release view "v$VERSION" >/dev/null 2>&1; then
+            echo "Release v$VERSION already exists; nothing to do."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! bash Scripts/release-notes.sh "$VERSION" | grep -q .; then
+            echo "::error::CHANGELOG.md has no notes under '## $VERSION'"; exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "release=true" >> "$GITHUB_OUTPUT"
+
+  release:
+    needs: decide
+    if: needs.decide.outputs.release == 'true'
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VERSION: ${{ needs.decide.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tools
+        run: |
+          mkdir -p logs dist
+          xcodebuild -version
+          swift --version
+
+      - name: Tests
+        run: |
+          set -o pipefail
+          swift test 2>&1 | tee -a logs/tests.log
+          for package in Packages/*/; do
+            swift test --package-path "$package" 2>&1 | tee -a logs/tests.log
+          done
+
+      - name: Build
+        run: |
+          set -o pipefail
+          MARKETING_VERSION="$VERSION" BUILD_NUMBER="${{ github.run_number }}" \
+            bash Scripts/build.sh 2>&1 | tee logs/release-build.log
+
+      - name: Sign ad hoc and zip
+        run: |
+          APP="build/$APP_NAME.app"
+          codesign --force --deep --sign - "$APP"
+          codesign --verify --deep --strict --verbose=2 "$APP"
+          ditto -c -k --sequesterRsrc --keepParent "$APP" "dist/$APP_NAME-$VERSION-mac-arm64.zip"
+          shasum -a 256 "dist/$APP_NAME-$VERSION-mac-arm64.zip"
+
+      - name: Publish release
+        run: |
+          bash Scripts/release-notes.sh "$VERSION" > dist/notes.md
+          gh release create "v$VERSION" "dist/$APP_NAME-$VERSION-mac-arm64.zip" \
+            --title "$APP_NAME $VERSION" \
+            --notes-file dist/notes.md \
+            --target "$GITHUB_SHA"
+
+      - name: Publish build report
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash Scripts/publish-ci-log.sh release "${{ job.status }}"

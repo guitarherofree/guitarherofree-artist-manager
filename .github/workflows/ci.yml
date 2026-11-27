@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          mkdir -p logs
+          xcodebuild -version
+          swift --version
+
+      - name: Tests
+        run: |
+          set -o pipefail
+          swift test 2>&1 | tee -a logs/tests.log
+          for package in Packages/*/; do
+            swift test --package-path "$package" 2>&1 | tee -a logs/tests.log
+          done
+
+      - name: Build app
+        run: |
+          set -o pipefail
+          CONFIGURATION=debug bash Scripts/build.sh 2>&1 | tee logs/app-build.log
+
+      - name: Publish build report
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash Scripts/publish-ci-log.sh ci "${{ job.status }}"
