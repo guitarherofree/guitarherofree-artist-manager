@@ -1,0 +1,86 @@
+workflow: ci
+status: failure
+commit: 5b652b95126f5180135edbb79232ba0405056742
+ref: main
+run: https://github.com/guitarherofree/guitarherofree-artist-manager/actions/runs/45922392763
+date: 2026-11-27T01:25:36Z
+
+===== logs/tests.log: problems =====
+108:	 Executed 12 tests, with 0 failures (0 unexpected) in 0.010 (0.010) seconds
+115:	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+124:	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+151:/Users/runner/work/guitarherofree-artist-manager/guitarherofree-artist-manager/Tests/ArtistManagerTests/CoverageTests.swift:33: error: -[ArtistManagerTests.CoverageTests testReadsOpenGraphArticleTagsAndReviewScore] : XCTAssertEqual failed: ("8.199999999999999/10") is not equal to ("8.2/10")
+152:/Users/runner/work/guitarherofree-artist-manager/guitarherofree-artist-manager/Tests/ArtistManagerTests/CoverageTests.swift:39: error: -[ArtistManagerTests.CoverageTests testReadsOpenGraphArticleTagsAndReviewScore] : XCTAssertEqual failed: ("8.199999999999999/10") is not equal to ("8.2/10")
+153:/Users/runner/work/guitarherofree-artist-manager/guitarherofree-artist-manager/Tests/ArtistManagerTests/CoverageTests.swift:43: error: -[ArtistManagerTests.CoverageTests testReadsOpenGraphArticleTagsAndReviewScore] : XCTAssertEqual failed: ("Dana Reyes, The Lantern (8.199999999999999/10)") is not equal to ("Dana Reyes, The Lantern (8.2/10)")
+154:Test Case '-[ArtistManagerTests.CoverageTests testReadsOpenGraphArticleTagsAndReviewScore]' failed (0.234 seconds).
+158:	 Executed 14 tests, with 3 failures (0 unexpected) in 0.254 (0.255) seconds
+195:	 Executed 17 tests, with 0 failures (0 unexpected) in 0.006 (0.006) seconds
+220:	 Executed 11 tests, with 0 failures (0 unexpected) in 0.007 (0.007) seconds
+247:	 Executed 12 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+276:	 Executed 13 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+305:	 Executed 13 tests, with 0 failures (0 unexpected) in 0.006 (0.006) seconds
+326:	 Executed 9 tests, with 0 failures (0 unexpected) in 0.022 (0.022) seconds
+328:	 Executed 106 tests, with 3 failures (0 unexpected) in 0.314 (0.317) seconds
+330:	 Executed 106 tests, with 3 failures (0 unexpected) in 0.314 (0.318) seconds
+
+===== logs/tests.log: last 60 lines =====
+Test Suite 'PlanningTests' passed at 2026-11-27 01:25:36.273.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+Test Suite 'TargetTests' started at 2026-11-27 01:25:36.273.
+Test Case '-[ArtistManagerTests.TargetTests testActivitySuggestsTheNextStatusWithoutApplyingIt]' started.
+Test Case '-[ArtistManagerTests.TargetTests testActivitySuggestsTheNextStatusWithoutApplyingIt]' passed (0.001 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testCSVImportUnderstandsCommonColumns]' started.
+Test Case '-[ArtistManagerTests.TargetTests testCSVImportUnderstandsCommonColumns]' passed (0.000 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testCSVRoundTripAndDuplicates]' started.
+Test Case '-[ArtistManagerTests.TargetTests testCSVRoundTripAndDuplicates]' passed (0.001 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testDueAndWayIn]' started.
+Test Case '-[ArtistManagerTests.TargetTests testDueAndWayIn]' passed (0.000 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testFindsPeopleByOrganizationWebsiteDomainOrLink]' started.
+Test Case '-[ArtistManagerTests.TargetTests testFindsPeopleByOrganizationWebsiteDomainOrLink]' passed (0.000 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testFindsSubmissionPagesAndAddresses]' started.
+Test Case '-[ArtistManagerTests.TargetTests testFindsSubmissionPagesAndAddresses]' passed (0.001 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testFitReasons]' started.
+Test Case '-[ArtistManagerTests.TargetTests testFitReasons]' passed (0.000 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testGuessesKindFromNameAndDescription]' started.
+Test Case '-[ArtistManagerTests.TargetTests testGuessesKindFromNameAndDescription]' passed (0.000 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testLabelPitchDraft]' started.
+Test Case '-[ArtistManagerTests.TargetTests testLabelPitchDraft]' passed (0.000 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testOlderFilesWithoutTargetsLoadAndTargetsUndo]' started.
+Test Case '-[ArtistManagerTests.TargetTests testOlderFilesWithoutTargetsLoadAndTargetsUndo]' passed (0.001 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testPlanNudges]' started.
+Test Case '-[ArtistManagerTests.TargetTests testPlanNudges]' passed (0.001 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testSharedPlatformsDontMatchEveryOutlet]' started.
+Test Case '-[ArtistManagerTests.TargetTests testSharedPlatformsDontMatchEveryOutlet]' passed (0.000 seconds).
+Test Case '-[ArtistManagerTests.TargetTests testSuggestionsFromContactsAndCoverage]' started.
+Test Case '-[ArtistManagerTests.TargetTests testSuggestionsFromContactsAndCoverage]' passed (0.000 seconds).
+Test Suite 'TargetTests' passed at 2026-11-27 01:25:36.279.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.006 (0.006) seconds
+Test Suite 'UndoAndPersistenceTests' started at 2026-11-27 01:25:36.279.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testBackupsArePruned]' started.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testBackupsArePruned]' passed (0.010 seconds).
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testConflictDetectedWhenRecordEditedAfterAction]' started.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testConflictDetectedWhenRecordEditedAfterAction]' passed (0.000 seconds).
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testCurrentFilesRoundTripUnchanged]' started.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testCurrentFilesRoundTripUnchanged]' passed (0.001 seconds).
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testDataMovesFromTheOldFolderName]' started.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testDataMovesFromTheOldFolderName]' passed (0.003 seconds).
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testDiffCapturesAddsChangesAndRemovals]' started.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testDiffCapturesAddsChangesAndRemovals]' passed (0.000 seconds).
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testOlderFilesWithMissingFieldsStillLoad]' started.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testOlderFilesWithMissingFieldsStillLoad]' passed (0.001 seconds).
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testPersistenceRoundTripAndRecoveryFromBackup]' started.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testPersistenceRoundTripAndRecoveryFromBackup]' passed (0.005 seconds).
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testRevertRestoresEveryRecord]' started.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testRevertRestoresEveryRecord]' passed (0.001 seconds).
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testUndoWorksForRecordsSavedBeforeAFieldExisted]' started.
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testUndoWorksForRecordsSavedBeforeAFieldExisted]' passed (0.000 seconds).
+Test Suite 'UndoAndPersistenceTests' passed at 2026-11-27 01:25:36.302.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.022 (0.022) seconds
+Test Suite 'ArtistManagerPackageTests.xctest' failed at 2026-11-27 01:25:36.302.
+	 Executed 106 tests, with 3 failures (0 unexpected) in 0.314 (0.317) seconds
+Test Suite 'All tests' failed at 2026-11-27 01:25:36.302.
+	 Executed 106 tests, with 3 failures (0 unexpected) in 0.314 (0.318) seconds
+◇ Test run started.
+↳ Testing Library Version: 124.4
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests passed after 0.001 seconds.
