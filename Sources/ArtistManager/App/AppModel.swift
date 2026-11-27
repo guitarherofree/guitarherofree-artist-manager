@@ -3,7 +3,7 @@ import Foundation
 import SwiftUI
 
 enum SidebarItem: String, Hashable, CaseIterable, Identifiable {
-    case today, plan, profile, releases, press, coverage, targets, email, calendar, tasks, contacts, approvals, integrations, roadmap
+    case today, plan, profile, releases, press, coverage, targets, email, calendar, tasks, team, contacts, approvals, integrations, roadmap
     var id: String { rawValue }
 
     var title: String {
@@ -18,7 +18,8 @@ enum SidebarItem: String, Hashable, CaseIterable, Identifiable {
         case .email: return "Email List"
         case .calendar: return "Calendar"
         case .tasks: return "Tasks"
-        case .contacts: return "Contacts & Team"
+        case .team: return "Team"
+        case .contacts: return "Contacts"
         case .approvals: return "Approvals & Activity"
         case .integrations: return "Connections"
         case .roadmap: return "Coming Next"
@@ -37,7 +38,8 @@ enum SidebarItem: String, Hashable, CaseIterable, Identifiable {
         case .email: return "envelope"
         case .calendar: return "calendar"
         case .tasks: return "checklist"
-        case .contacts: return "person.2"
+        case .team: return "person.3"
+        case .contacts: return "person.crop.rectangle.stack"
         case .approvals: return "checkmark.shield"
         case .integrations: return "point.3.connected.trianglepath.dotted"
         case .roadmap: return "road.lanes"
@@ -311,7 +313,12 @@ final class AppModel: ObservableObject {
     func open(_ destination: AppDestination, record: UUID? = nil, tab: String? = nil) {
         focusedRecordID = record
         requestedTab = tab
-        selection = SidebarItem(destination)
+        var target = destination
+        // A person opens on the page they're on: Team for team members, Contacts for everyone else.
+        if destination == .contacts || destination == .team, let person = workspace.contact(record) {
+            target = person.isTeamMember ? .team : .contacts
+        }
+        selection = SidebarItem(target)
     }
 
     // MARK: Data management

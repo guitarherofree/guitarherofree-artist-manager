@@ -21,6 +21,7 @@ struct RootView: View {
                     row(.email)
                     row(.calendar)
                     row(.tasks)
+                    row(.team)
                     row(.contacts)
                 }
                 Section("Control") {
@@ -66,7 +67,8 @@ struct RootView: View {
         case .email: EmailListView()
         case .calendar: CalendarView()
         case .tasks: TasksView()
-        case .contacts: ContactsView()
+        case .team: ContactsView(audience: .team).id("team")
+        case .contacts: ContactsView(audience: .contacts).id("contacts")
         case .approvals: ApprovalsView()
         case .integrations: IntegrationsView()
         case .roadmap: RoadmapView()

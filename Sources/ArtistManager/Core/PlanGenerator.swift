@@ -186,8 +186,8 @@ enum PlanGenerator {
         let roles = Set(ws.contacts.filter(\.isTeamMember).map(\.role))
         if (goalCategories.contains(.deals) || goalCategories.contains(.revenue)) && !roles.contains(.attorney) {
             add("team-attorney", "Find an entertainment attorney before signing agreements",
-                "Add one to your team in Contacts, even if you only use them per agreement.",
-                why: "Your goals include deals or income, which usually means contracts.", area: .team, destination: .contacts)
+                "Add one on the Team page, even if you only use them per agreement.",
+                why: "Your goals include deals or income, which usually means contracts.", area: .team, destination: .team)
         }
         if goalCategories.contains(.live) {
             let bookers = ws.contacts.filter { [.venue, .promoter, .bookingAgent].contains($0.role) }.count
@@ -204,13 +204,14 @@ enum PlanGenerator {
         if !staleTeam.isEmpty {
             add("team-checkin", "Check in with \(staleTeam.count) team member\(staleTeam.count == 1 ? "" : "s")",
                 staleTeam.prefix(4).map(\.displayName).joined(separator: ", ") + " — no logged conversation in \(ws.settings.teamCheckInDays)+ days.",
-                why: "Regular check-ins keep work moving without a manager in the middle.", area: .team, destination: .contacts)
+                why: "Regular check-ins keep work moving without a manager in the middle.", area: .team, destination: .team)
         }
         let dueFollowUps = ws.contacts.filter { ($0.nextFollowUp ?? .distantFuture) <= today.adding(days: 1) }
         if !dueFollowUps.isEmpty {
             add("contact-followups", "Follow up with \(dueFollowUps.count) contact\(dueFollowUps.count == 1 ? "" : "s")",
                 dueFollowUps.prefix(4).map(\.displayName).joined(separator: ", "),
-                why: "You set follow-up dates that are due.", area: .team, priority: .high, destination: .contacts, due: today)
+                why: "You set follow-up dates that are due.", area: .team, priority: .high,
+                destination: dueFollowUps.allSatisfy(\.isTeamMember) ? .team : .contacts, due: today)
         }
 
         // Coverage

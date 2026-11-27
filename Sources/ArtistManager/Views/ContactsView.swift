@@ -2,8 +2,12 @@ import AppKit
 import SwiftUI
 import UniformTypeIdentifiers
 
+/// Two pages share this view: Team (the people you work with) and Contacts (everyone else).
 struct ContactsView: View {
+    enum Audience { case team, contacts }
+
     @EnvironmentObject var model: AppModel
+    var audience: Audience = .contacts
     @State private var selectedID: UUID?
     @State private var search = ""
     @State private var scope: Scope = .all
@@ -16,22 +20,25 @@ struct ContactsView: View {
     }
 
     enum Scope: String, CaseIterable, Identifiable {
-        case all, team, industry, media, live, followUp
+        case all, checkIn, industry, media, live, followUp
         var id: String { rawValue }
         var label: String {
             switch self {
             case .all: return "Everyone"
-            case .team: return "My team"
+            case .checkIn: return "Check-in due"
             case .industry: return "Industry"
             case .media: return "Press & curators"
             case .live: return "Live & booking"
             case .followUp: return "Follow-up due"
             }
         }
-        func includes(_ c: Contact, now: Date = Date()) -> Bool {
+        static func options(for audience: Audience) -> [Scope] {
+            audience == .team ? [.all, .checkIn, .followUp] : [.all, .industry, .media, .live, .followUp]
+        }
+        func includes(_ c: Contact, checkInDays: Int, now: Date = Date()) -> Bool {
             switch self {
             case .all: return true
-            case .team: return c.isTeamMember
+            case .checkIn: return c.lastContacted.map { Date.daysBetween($0, now.startOfDay) > checkInDays } ?? true
             case .industry: return c.role.isIndustry && !c.role.isMedia
             case .media: return c.role.isMedia
             case .live: return [.bookingAgent, .promoter, .venue].contains(c.role)
@@ -40,9 +47,16 @@ struct ContactsView: View {
         }
     }
 
+    private var isTeam: Bool { audience == .team }
+
+    /// Everyone on this page, before search and filters.
+    private var people: [Contact] {
+        model.workspace.contacts.filter { $0.isTeamMember == isTeam }
+    }
+
     private var contacts: [Contact] {
-        model.workspace.contacts
-            .filter { scope.includes($0) }
+        people
+            .filter { scope.includes($0, checkInDays: model.workspace.settings.teamCheckInDays) }
             .filter { c in
                 search.isBlank || c.displayName.localizedCaseInsensitiveContains(search) || c.organization.localizedCaseInsensitiveContains(search)
                     || c.email.localizedCaseInsensitiveContains(search) || c.tags.contains { $0.localizedCaseInsensitiveContains(search) }
@@ -59,28 +73,28 @@ struct ContactsView: View {
             VStack(alignment: .leading, spacing: 0) {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text("Contacts & Team").font(.title2.weight(.semibold))
+                        Text(isTeam ? "Team" : "Contacts").font(.title2.weight(.semibold)).accessibilityAddTraits(.isHeader)
                         Spacer()
                         Button {
-                            editing = Contact()
+                            editing = newPerson()
                         } label: {
                             Image(systemName: "plus")
                         }
-                        .help("New contact")
-                        .accessibilityLabel("New contact")
+                        .help(isTeam ? "Add a team member" : "New contact")
+                        .accessibilityLabel(isTeam ? "Add a team member" : "New contact")
                     }
                     HStack {
-                        importMenu
+                        if !isTeam { importMenu }
                         Button("Export CSV…") {
-                            model.exportText(ContactCSV.export(model.workspace.contacts), suggestedName: "Contacts.csv",
-                                             types: [.commaSeparatedText], logTitle: "Exported contacts")
+                            model.exportText(ContactCSV.export(people), suggestedName: isTeam ? "Team.csv" : "Contacts.csv",
+                                             types: [.commaSeparatedText], logTitle: isTeam ? "Exported team" : "Exported contacts")
                         }
-                        .disabled(model.workspace.contacts.isEmpty)
+                        .disabled(people.isEmpty)
                     }
                     .controlSize(.small)
                     TextField("Search", text: $search).textFieldStyle(.roundedBorder)
                     Picker("Show", selection: $scope) {
-                        ForEach(Scope.allCases) { Text($0.label).tag($0) }
+                        ForEach(Scope.options(for: audience)) { Text($0.label).tag($0) }
                     }
                     .labelsHidden()
                 }
@@ -93,24 +107,42 @@ struct ContactsView: View {
             }
             .frame(width: 280)
             Divider()
-            if let id = selectedID, let contact = model.workspace.contacts.first(where: { $0.id == id }) {
+            if let id = selectedID, let contact = people.first(where: { $0.id == id }) {
                 ContactDetail(contact: contact, onEdit: { editing = contact })
                     .id(contact.id)
-            } else if model.workspace.contacts.isEmpty {
+            } else if people.isEmpty && isTeam {
                 ContentUnavailableView {
-                    Label("No contacts yet", systemImage: "person.2")
+                    Label("No team yet", systemImage: "person.3")
                 } description: {
-                    Text("Add your team (agent, attorney, accountant, publicist) and industry contacts (writers, curators, promoters, venues, music supervisors), or bring them in from the Contacts app, a vCard or a CSV.")
+                    Text("Add the people you work with — manager, booking agent, attorney, accountant, publicist, producer — with what each one handles. Manager reminds you to check in with them. Someone already in Contacts can be moved here by turning on “Part of my team”.")
+                } actions: {
+                    Button("Add Team Member") { editing = newPerson() }.buttonStyle(.borderedProminent)
+                    Button("Open Contacts") { model.open(.contacts) }
+                }
+            } else if people.isEmpty {
+                ContentUnavailableView {
+                    Label("No contacts yet", systemImage: "person.crop.rectangle.stack")
+                } description: {
+                    Text("Add industry contacts — writers, curators, promoters, venues, labels, music supervisors — or bring them in from the Contacts app, a vCard or a CSV. Your own team lives on the Team page.")
                 } actions: {
                     Button("Import from Contacts App…") { importing = .contactsApp }.buttonStyle(.borderedProminent)
-                    Button("Add Contact") { editing = Contact() }
+                    Button("Add Contact") { editing = newPerson() }
                 }
             } else {
-                EmptyStateView(title: "Choose a contact", symbol: "person.crop.circle", message: "Select someone on the left.")
+                EmptyStateView(title: isTeam ? "Choose a team member" : "Choose a contact", symbol: "person.crop.circle",
+                               message: "Select someone on the left.")
             }
         }
         .sheet(item: $editing) { contact in
-            ContactEditor(contact: contact) { saved in selectedID = saved }.environmentObject(model)
+            ContactEditor(contact: contact) { saved in
+                // Turning “Part of my team” on or off moves the person to the other page; follow them there.
+                if let person = model.workspace.contact(saved), person.isTeamMember != isTeam {
+                    model.open(person.isTeamMember ? .team : .contacts, record: saved)
+                } else {
+                    selectedID = saved
+                }
+            }
+            .environmentObject(model)
         }
         .sheet(item: $importing) { source in
             switch source {
@@ -120,13 +152,19 @@ struct ContactsView: View {
             }
         }
         .onAppear {
-            if let focus = model.focusedRecordID, model.workspace.contacts.contains(where: { $0.id == focus }) {
+            if let focus = model.focusedRecordID, people.contains(where: { $0.id == focus }) {
                 selectedID = focus
                 model.focusedRecordID = nil
             } else if selectedID == nil {
                 selectedID = contacts.first?.id
             }
         }
+    }
+
+    private func newPerson() -> Contact {
+        var c = Contact()
+        c.isTeamMember = isTeam
+        return c
     }
 }
 

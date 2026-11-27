@@ -214,3 +214,22 @@ final class PlanningTests: XCTestCase {
         XCTAssertTrue(Drafting.pressReleaseText(pr).hasPrefix("FOR IMMEDIATE RELEASE"))
     }
 }
+
+final class TeamPageTests: XCTestCase {
+    func testTeamRecommendationsOpenTheTeamPage() {
+        var ws = Workspace.onboarded(goals: [.deals])
+        var agent = makeContact("Riley Shaw", email: "riley@agency.example", role: .bookingAgent, team: true)
+        agent.nextFollowUp = TestDates.now
+        ws.contacts = [agent]
+        let recs = PlanGenerator.generate(for: ws, now: TestDates.now).recommendations
+        XCTAssertEqual(recs.first { $0.ruleKey == "team-attorney" }?.destination, .team)
+        XCTAssertEqual(recs.first { $0.ruleKey == "team-checkin" }?.destination, .team)
+        XCTAssertEqual(recs.first { $0.ruleKey == "contact-followups" }?.destination, .team, "Only team members are due")
+
+        var writer = makeContact("Dana Reyes", email: "dana@thelantern.example")
+        writer.nextFollowUp = TestDates.now
+        ws.contacts.append(writer)
+        let mixed = PlanGenerator.generate(for: ws, now: TestDates.now).recommendations
+        XCTAssertEqual(mixed.first { $0.ruleKey == "contact-followups" }?.destination, .contacts)
+    }
+}

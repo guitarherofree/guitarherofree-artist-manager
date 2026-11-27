@@ -2,6 +2,11 @@
 
 To publish a release, add a `## x.y.z` section at the top with notes and push to main.
 
+## 0.2.1
+- **Team** and **Contacts** are now separate pages in the sidebar. Team holds the people you work with, with what each one handles and a filter for check-ins that are due. Contacts holds everyone else, with the import options.
+- Turning “Part of my team” on or off moves a person to the other page, and Manager takes you there.
+- Links to a person from the Career Plan, Calendar, Coverage and Targets open the right page.
+
 ## 0.2.0
 - First release published on GitHub. From now on Manager updates itself the same way as your other apps: it checks shortly after it opens and then daily, downloads new versions in the background, and installs them when you quit or click **Restart Now**. Check any time with **Manager › Check for Updates…**.
 - **Targets**: publications, labels, radio shows, podcasts, playlists and festivals to pitch or keep an eye on, with how they take submissions, the people there, every pitch and piece of coverage, and a date to look again. Paste a website and Manager fills in the details. Includes a new label pitch.
