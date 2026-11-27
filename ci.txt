@@ -1,19 +1,19 @@
 workflow: ci
 status: success
-commit: 2fc0dfc9f55febf8331f811037d10970aee5dc72
+commit: 59b724ab9e4a1c0d0334eb27b00ae59b1241045b
 ref: main
-run: https://github.com/guitarherofree/guitarherofree-artist-manager/actions/runs/45924221576
-date: 2026-11-27T01:45:27Z
+run: https://github.com/guitarherofree/guitarherofree-artist-manager/actions/runs/45943748180
+date: 2026-11-27T05:07:24Z
 
 ===== logs/app-build.log: problems =====
 
 ===== logs/app-build.log: last 60 lines =====
 
-==> Building Manager 0.2.1 (1)
+==> Building Manager 0.3.0 (1)
 [0/1] Planning build
 Building for debugging...
 [0/3] Write swift-version--79AA4F9932D1E87A.txt
-Build of product 'ArtistManager' complete! (0.58s)
+Build of product 'ArtistManager' complete! (0.60s)
 
 ==> Assembling the app bundle
 
@@ -26,23 +26,25 @@ Build of product 'ArtistManager' complete! (0.58s)
 /Users/runner/work/guitarherofree-artist-manager/guitarherofree-artist-manager/build/Manager.app
 
 ===== logs/tests.log: problems =====
-108:	 Executed 12 tests, with 0 failures (0 unexpected) in 0.018 (0.019) seconds
-115:	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
-124:	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
-157:	 Executed 15 tests, with 0 failures (0 unexpected) in 0.031 (0.033) seconds
-194:	 Executed 17 tests, with 0 failures (0 unexpected) in 0.010 (0.011) seconds
-219:	 Executed 11 tests, with 0 failures (0 unexpected) in 0.008 (0.008) seconds
-246:	 Executed 12 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
-275:	 Executed 13 tests, with 0 failures (0 unexpected) in 0.008 (0.008) seconds
-304:	 Executed 13 tests, with 0 failures (0 unexpected) in 0.008 (0.008) seconds
-330:	 Executed 9 tests, with 0 failures (0 unexpected) in 0.033 (0.033) seconds
-332:	 Executed 108 tests, with 0 failures (0 unexpected) in 0.123 (0.129) seconds
-334:	 Executed 108 tests, with 0 failures (0 unexpected) in 0.123 (0.131) seconds
-373:	 Executed 7 tests, with 0 failures (0 unexpected) in 0.081 (0.081) seconds
-375:	 Executed 7 tests, with 0 failures (0 unexpected) in 0.081 (0.081) seconds
-377:	 Executed 7 tests, with 0 failures (0 unexpected) in 0.081 (0.082) seconds
+112:	 Executed 12 tests, with 0 failures (0 unexpected) in 0.010 (0.010) seconds
+119:	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+128:	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+161:	 Executed 15 tests, with 0 failures (0 unexpected) in 0.024 (0.025) seconds
+198:	 Executed 17 tests, with 0 failures (0 unexpected) in 0.007 (0.007) seconds
+223:	 Executed 11 tests, with 0 failures (0 unexpected) in 0.008 (0.009) seconds
+242:	 Executed 8 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+269:	 Executed 12 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+298:	 Executed 13 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+327:	 Executed 13 tests, with 0 failures (0 unexpected) in 0.006 (0.006) seconds
+353:	 Executed 9 tests, with 0 failures (0 unexpected) in 0.026 (0.027) seconds
+355:	 Executed 116 tests, with 0 failures (0 unexpected) in 0.098 (0.103) seconds
+357:	 Executed 116 tests, with 0 failures (0 unexpected) in 0.098 (0.104) seconds
+395:	 Executed 7 tests, with 0 failures (0 unexpected) in 0.062 (0.063) seconds
+397:	 Executed 7 tests, with 0 failures (0 unexpected) in 0.062 (0.063) seconds
+399:	 Executed 7 tests, with 0 failures (0 unexpected) in 0.062 (0.064) seconds
 
 ===== logs/tests.log: last 60 lines =====
+Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testOlderFilesWithMissingFieldsStillLoad]' started.
 Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testOlderFilesWithMissingFieldsStillLoad]' passed (0.001 seconds).
 Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testPersistenceRoundTripAndRecoveryFromBackup]' started.
 Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testPersistenceRoundTripAndRecoveryFromBackup]' passed (0.007 seconds).
@@ -50,35 +52,34 @@ Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testRevertRestoresEveryR
 Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testRevertRestoresEveryRecord]' passed (0.001 seconds).
 Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testUndoWorksForRecordsSavedBeforeAFieldExisted]' started.
 Test Case '-[ArtistManagerTests.UndoAndPersistenceTests testUndoWorksForRecordsSavedBeforeAFieldExisted]' passed (0.000 seconds).
-Test Suite 'UndoAndPersistenceTests' passed at 2026-11-27 01:45:07.512.
-	 Executed 9 tests, with 0 failures (0 unexpected) in 0.033 (0.033) seconds
-Test Suite 'ArtistManagerPackageTests.xctest' passed at 2026-11-27 01:45:07.512.
-	 Executed 108 tests, with 0 failures (0 unexpected) in 0.123 (0.129) seconds
-Test Suite 'All tests' passed at 2026-11-27 01:45:07.512.
-	 Executed 108 tests, with 0 failures (0 unexpected) in 0.123 (0.131) seconds
+Test Suite 'UndoAndPersistenceTests' passed at 2026-11-27 05:07:06.566.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.026 (0.027) seconds
+Test Suite 'ArtistManagerPackageTests.xctest' passed at 2026-11-27 05:07:06.566.
+	 Executed 116 tests, with 0 failures (0 unexpected) in 0.098 (0.103) seconds
+Test Suite 'All tests' passed at 2026-11-27 05:07:06.566.
+	 Executed 116 tests, with 0 failures (0 unexpected) in 0.098 (0.104) seconds
 ◇ Test run started.
 ↳ Testing Library Version: 124.4
 ↳ Target Platform: arm64e-apple-macos14.0
 ✔ Test run with 0 tests passed after 0.001 seconds.
 Building for debugging...
-[0/7] Write sources
 [0/7] /Users/runner/work/guitarherofree-artist-manager/guitarherofree-artist-manager/Packages/GitHubReleaseUpdater/.build/arm64-apple-macosx/debug/GitHubReleaseUpdaterPackageTests.derived/runner.swift
-[2/7] Write sources
+[1/7] Write sources
 [4/7] Write swift-version--79AA4F9932D1E87A.txt
-[6/10] Compiling GitHubReleaseUpdater TokenStore.swift
-[7/11] Emitting module GitHubReleaseUpdater
-[8/11] Compiling GitHubReleaseUpdater Release.swift
+[6/10] Emitting module GitHubReleaseUpdater
+[7/10] Compiling GitHubReleaseUpdater TokenStore.swift
+[8/10] Compiling GitHubReleaseUpdater Release.swift
 [9/11] Compiling GitHubReleaseUpdater Updater.swift
-[10/13] Compiling GitHubReleaseUpdaterTests UpdaterTests.swift
-[11/13] Emitting module GitHubReleaseUpdaterTests
+[10/13] Emitting module GitHubReleaseUpdaterTests
+[11/13] Compiling GitHubReleaseUpdaterTests UpdaterTests.swift
 [12/15] Emitting module GitHubReleaseUpdaterPackageTests
 [13/15] Compiling GitHubReleaseUpdaterPackageTests runner.swift
 [13/15] Write Objects.LinkFileList
 [14/15] Linking GitHubReleaseUpdaterPackageTests
-Build complete! (16.18s)
-Test Suite 'All tests' started at 2026-11-27 01:45:24.710.
-Test Suite 'GitHubReleaseUpdaterPackageTests.xctest' started at 2026-11-27 01:45:24.712.
-Test Suite 'UpdaterTests' started at 2026-11-27 01:45:24.712.
+Build complete! (13.97s)
+Test Suite 'All tests' started at 2026-11-27 05:07:21.462.
+Test Suite 'GitHubReleaseUpdaterPackageTests.xctest' started at 2026-11-27 05:07:21.463.
+Test Suite 'UpdaterTests' started at 2026-11-27 05:07:21.463.
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testAssetName]' started.
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testAssetName]' passed (0.001 seconds).
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testDecodesReleaseAndPicksAsset]' started.
@@ -86,19 +87,19 @@ Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testDecodesReleaseAndPicksAs
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testFallsBackToAnyMacZip]' started.
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testFallsBackToAnyMacZip]' passed (0.000 seconds).
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testInstallScriptIsValidBash]' started.
-Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testInstallScriptIsValidBash]' passed (0.009 seconds).
+Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testInstallScriptIsValidBash]' passed (0.010 seconds).
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testInstallSwapsAppAndKeepsPrevious]' started.
-Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testInstallSwapsAppAndKeepsPrevious]' passed (0.061 seconds).
+Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testInstallSwapsAppAndKeepsPrevious]' passed (0.043 seconds).
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testSHA256OfFile]' started.
-Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testSHA256OfFile]' passed (0.009 seconds).
+Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testSHA256OfFile]' passed (0.007 seconds).
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testVersionComparison]' started.
 Test Case '-[GitHubReleaseUpdaterTests.UpdaterTests testVersionComparison]' passed (0.000 seconds).
-Test Suite 'UpdaterTests' passed at 2026-11-27 01:45:24.793.
-	 Executed 7 tests, with 0 failures (0 unexpected) in 0.081 (0.081) seconds
-Test Suite 'GitHubReleaseUpdaterPackageTests.xctest' passed at 2026-11-27 01:45:24.793.
-	 Executed 7 tests, with 0 failures (0 unexpected) in 0.081 (0.081) seconds
-Test Suite 'All tests' passed at 2026-11-27 01:45:24.793.
-	 Executed 7 tests, with 0 failures (0 unexpected) in 0.081 (0.082) seconds
+Test Suite 'UpdaterTests' passed at 2026-11-27 05:07:21.526.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.062 (0.063) seconds
+Test Suite 'GitHubReleaseUpdaterPackageTests.xctest' passed at 2026-11-27 05:07:21.526.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.062 (0.063) seconds
+Test Suite 'All tests' passed at 2026-11-27 05:07:21.526.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.062 (0.064) seconds
 ◇ Test run started.
 ↳ Testing Library Version: 124.4
 ↳ Target Platform: arm64e-apple-macos14.0
