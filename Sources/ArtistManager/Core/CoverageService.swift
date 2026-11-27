@@ -154,13 +154,28 @@ enum LinkReader {
             if info.datePublished.isBlank { info.datePublished = (o["datePublished"] as? String) ?? (o["uploadDate"] as? String ?? "") }
             if info.description.isBlank { info.description = decodeEntities(o["description"] as? String ?? "") }
             if info.rating.isBlank, let r = o["reviewRating"] as? [String: Any] {
-                let value = r["ratingValue"].map { "\($0)" } ?? ""
-                let best = r["bestRating"].map { "\($0)" } ?? ""
+                let value = scoreText(r["ratingValue"])
+                let best = scoreText(r["bestRating"])
                 if !value.isBlank { info.rating = best.isBlank ? value : "\(value)/\(best)" }
             }
         }
         info.types = Array(NSOrderedSet(array: info.types)) as? [String] ?? info.types
         return info
+    }
+
+    /// A score as people write it: 8.2 rather than 8.199999999999999, and 10 rather than 10.0.
+    static func scoreText(_ value: Any?) -> String {
+        switch value {
+        case let text as String:
+            return text.trimmed
+        case let number as Double:
+            if number == number.rounded(), abs(number) < 1e9 { return String(Int(number)) }
+            return String(format: "%g", number)
+        case let number as Int:
+            return String(number)
+        default:
+            return ""
+        }
     }
 
     static func decodeEntities(_ text: String) -> String {

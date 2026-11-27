@@ -69,6 +69,15 @@ final class CoverageTests: XCTestCase {
         XCTAssertEqual(CoverageLinks.guessKind(url: meta.url, title: meta.title, schemaTypes: meta.schemaTypes), .article)
     }
 
+    func testScoresReadTheWayPeopleWriteThem() {
+        XCTAssertEqual(LinkReader.scoreText(8.2), "8.2")
+        XCTAssertEqual(LinkReader.scoreText(8.199999999999999), "8.2")
+        XCTAssertEqual(LinkReader.scoreText(10.0), "10")
+        XCTAssertEqual(LinkReader.scoreText(4), "4")
+        XCTAssertEqual(LinkReader.scoreText(" 4.5 "), "4.5")
+        XCTAssertEqual(LinkReader.scoreText(nil), "")
+    }
+
     func testEntityDecoding() {
         XCTAssertEqual(LinkReader.decodeEntities("Rock &amp; Roll &#39;26 &#x2014; &quot;live&quot; &unknown; &"),
                        "Rock & Roll '26 — \"live\" &unknown; &")
